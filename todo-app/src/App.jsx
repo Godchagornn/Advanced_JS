@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import TaskInput from "./components/TaskInput";
 import FilterBar from "./components/FilterBar";
-import TaskList from "./components/TaskList";
+import TaskItem from "./components/TaskItem";
 import "./App.css";
 
 const initialTasks = [
-{ id: 1, text: 'Complete React Session 3', completed: true },
-{ id: 2, text: 'Read React docs', completed: false },
-{ id: 3, text: 'Read React documentation', completed: false },
+  { id: 1, text: 'Complete React Session 3', completed: true },
+  { id: 2, text: 'Read React docs', completed: false },
+  { id: 3, text: 'Read React documentation', completed: false },
 ];
+
 let nextId = 4;
 
 function App() {
@@ -63,11 +64,16 @@ function App() {
 
       <FilterBar filter={filter} setFilter={setFilter} />
 
-      <TaskList
-        tasks={filteredTasks}
-        onToggle={handleToggle}
-        onDelete={handleDelete}
-      />
+      <ul className="task-list">
+        {filteredTasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+          />
+        ))}
+      </ul>
 
       {completedCount > 0 && (
         <button className="clear-btn" onClick={clearCompleted}>
