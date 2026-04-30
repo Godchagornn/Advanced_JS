@@ -34,6 +34,7 @@ function App() {
   return (
     <ExpenseProvider>
       <div className={styles.app}>
+        
         <h1>Expense Tracker</h1>
 
         <div className={styles.nav}>
