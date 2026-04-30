@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, NavLink } from 'react-router-dom';
 import { ExpenseProvider } from './context/ExpenseContext';
 import AddExpenseForm from './components/AddExpenseForm';
 import ExpenseList from './components/ExpenseList';
@@ -6,7 +6,7 @@ import ExpenseSummary from './components/ExpenseSummary';
 import Budget from './components/Budget';
 import ExportCSV from './components/ExportCSV';
 import ExpenseChart from './components/ExpenseChart';
-import './App.css';
+import styles from './App.module.css';
 
 function Dashboard() {
   return (
@@ -20,11 +20,10 @@ function Dashboard() {
 function ChartPage() {
   return (
     <>
-      <div className="chart-header">
+      <div className={styles.chartHeader}>
         <ExportCSV />
       </div>
-
-      <div className="chart-card">
+      <div className={styles.chartCard}>
         <ExpenseChart />
       </div>
     </>
@@ -34,15 +33,30 @@ function ChartPage() {
 function App() {
   return (
     <ExpenseProvider>
-      <div className="app">
-        <h1>Expense Tracker</h1>
+      <div className={styles.app}>
+        <h1>{import.meta.env.VITE_APP_TITLE}</h1>
 
-        <div style={{ marginBottom: 20 }}>
-          <Link className="tab" to="/">Dashboard</Link>
-          <Link className="tab" to="/chart">Chart</Link>
+        <div className={styles.nav}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ''}`
+            }
+          >
+            Dashboard
+          </NavLink>
+
+          <NavLink
+            to="/chart"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ''}`
+            }
+          >
+            Chart
+          </NavLink>
         </div>
 
-        <div className="main-layout">
+        <div className={styles.layout}>
           <aside>
             <Budget />
             <ExpenseSummary />

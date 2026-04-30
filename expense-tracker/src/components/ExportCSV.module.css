@@ -1,0 +1,28 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--blue-mid);
+  background: transparent;
+  color: var(--blue-text);
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.btn:hover {
+  background: var(--blue-mid);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(58,127,240,0.32);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

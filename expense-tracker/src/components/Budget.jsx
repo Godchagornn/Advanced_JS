@@ -1,28 +1,25 @@
 import { useExpenses } from '../context/ExpenseContext';
+import styles from './Budget.module.css';
 
 function Budget() {
   const { budget, setBudget, percentUsed } = useExpenses();
 
   return (
-    <div className="budget-card">
-      <h3>Monthly Budget</h3>
+    <div className={styles.card}>
+      <h3>Budget</h3>
 
       <input
+        className={styles.input}
         type="number"
         value={budget}
         onChange={e => setBudget(Number(e.target.value))}
       />
 
-      <div className="budget-progress">
-        <div
-          className="budget-bar"
-          style={{ width: `${percentUsed}%` }}
-        />
+      <div className={styles.bar}>
+        <div className={styles.fill} style={{ width: `${percentUsed}%` }} />
       </div>
 
-      <p className="budget-label">
-        {percentUsed.toFixed(2)}% used
-      </p>
+      <p>{percentUsed.toFixed(2)}%</p>
     </div>
   );
 }

@@ -3,64 +3,31 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
-  Tooltip,
-  Legend
+  Tooltip
 } from 'chart.js';
 
 import { Bar } from 'react-chartjs-2';
-import { useExpenses } from '../context/ExpenseContext';
+import { useExpenses, CATEGORY_COLORS } from '../context/ExpenseContext';
+import { useMemo } from 'react';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 function ExpenseChart() {
   const { expenses, categories } = useExpenses();
 
-  const data = {
-  labels: categories,
-  datasets: [
-    {
-      label: 'Expenses',
+  const data = useMemo(() => ({
+    labels: categories,
+    datasets: [{
       data: categories.map(cat =>
-        expenses
-          .filter(e => e.category === cat)
-          .reduce((sum, e) => sum + e.amount, 0)
+        expenses.filter(e => e.category === cat).reduce((sum, e) => sum + e.amount, 0)
       ),
-      backgroundColor: [
-        '#10b981',
-        '#3b82f6',
-        '#f59e0b',
-        '#ef4444',
-        '#8b5cf6',
-        '#6b7280'
-      ]
-    }
-  ]
-};
+      backgroundColor: categories.map(cat => CATEGORY_COLORS[cat]),
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  }), [expenses, categories]);
 
-  const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false
-    }
-  }
-};
-
-  return (
-    <Bar
-      data={data}
-      options={options}
-      redraw={true} 
-    />
-  );
+  return <Bar data={data} options={{ plugins: { legend: { display: false } } }} />;
 }
 
 export default ExpenseChart;

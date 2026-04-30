@@ -1,20 +1,13 @@
 import { useExpenses } from '../context/ExpenseContext';
+import styles from './ExportCSV.module.css';
 
 function ExportCSV() {
   const { expenses } = useExpenses();
 
   function downloadCSV() {
     const header = ['Name', 'Amount', 'Category', 'Date'];
-
-    const rows = expenses.map(e => [
-      e.name,
-      e.amount,
-      e.category,
-      e.date
-    ]);
-
-    const csv =
-      [header, ...rows].map(r => r.join(',')).join('\n');
+    const rows = expenses.map(e => [e.name, e.amount, e.category, e.date]);
+    const csv = [header, ...rows].map(r => r.join(',')).join('\n');
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -26,7 +19,7 @@ function ExportCSV() {
   }
 
   return (
-    <button className="export-btn" onClick={downloadCSV}>
+    <button className={styles.btn} onClick={downloadCSV}>
       Export CSV
     </button>
   );

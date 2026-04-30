@@ -1,78 +1,38 @@
 import { useExpenses } from '../context/ExpenseContext';
-
-const COLORS = {
-  Food: '#ff9500',
-  Transport: '#0077cc',
-  Health: '#10b981',
-  Shopping: '#ec4899',
-  Entertainment: '#8b5cf6',
-  Other: '#6b7280'
-};
+import styles from './ExpenseList.module.css';
 
 function ExpenseList() {
-  const {
-    filteredExpenses,
-    deleteExpense,
-    editExpense,
-    filter,
-    setFilter,
-    categories
-  } = useExpenses();
+  const { filteredExpenses, deleteExpense, filter, setFilter, categories, categoryColors } = useExpenses();
 
   return (
-    <div>
-      {['All', ...categories].map(cat => (
-        <button
-          key={cat}
-          onClick={() => setFilter(cat)}
-          className={`tab ${filter === cat ? 'active' : ''}`}
-        >
-          {cat}
-        </button>
-      ))}
+    <div className={styles.wrapper}>
+      <div className={styles.tabs}>
+        {['All', ...categories].map(cat => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            className={`${styles.tab} ${filter === cat ? styles.active : ''}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
       {filteredExpenses.map(exp => (
-        <div key={exp.id} className="expense-item">
-          <div className="expense-left">
-            <span
-              className="expense-color"
-              style={{ background: COLORS[exp.category] }}
-            ></span>
-
+        <div key={exp.id} className={styles.item}>
+          <div className={styles.left}>
+            <span className={styles.color} style={{ background: categoryColors[exp.category] }} />
             <div>
-              <div className="expense-name">{exp.name}</div>
-              <div className="expense-date">{exp.date}</div>
+              <div className={styles.name}>{exp.name}</div>
+              <div className={styles.date}>{exp.date}</div>
             </div>
           </div>
 
-          <div className="expense-amount">
-            ${exp.amount.toFixed(2)}
+          <div className={styles.amount}>${exp.amount.toFixed(2)}</div>
+
+          <div className={styles.actions}>
+            <button onClick={() => deleteExpense(exp.id)}>Delete</button>
           </div>
-
-          <button
-            className="btn-edit"
-            onClick={() => {
-              const newName = prompt('Edit name', exp.name);
-              const newAmount = prompt('Edit amount', exp.amount);
-
-              if (!newName || !newAmount) return;
-
-              editExpense({
-                ...exp,
-                name: newName,
-                amount: parseFloat(newAmount)
-              });
-            }}
-          >
-            Edit
-          </button>
-
-          <button
-            className="btn-delete"
-            onClick={() => deleteExpense(exp.id)}
-          >
-            Delete
-          </button>
         </div>
       ))}
     </div>
