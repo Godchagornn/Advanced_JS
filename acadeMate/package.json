@@ -1,5 +1,5 @@
 {
-  "name": "expense-tracker",
+  "name": "academate",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "chart.js": "^4.5.1",
+    "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.16.0",
     "react": "^19.2.5",
-    "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2"
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
