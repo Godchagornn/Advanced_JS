@@ -18,9 +18,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          redux: ['@reduxjs/toolkit', 'react-redux'],
+        manualChunks(id) {
+          if (id.includes('react') || id.includes('react-dom')) return 'vendor';
+          if (id.includes('@reduxjs/toolkit') || id.includes('react-redux')) return 'redux';
         },
       },
     },
